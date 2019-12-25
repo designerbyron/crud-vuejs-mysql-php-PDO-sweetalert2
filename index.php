@@ -31,7 +31,7 @@
             <div class="col-lg-12">
                 <table class="table table-stripped">
                     <thead>
-                        <tr>
+                        <tr class="bg-primary text-white">
                             <th>ID</th>
                             <th>Marca</th>
                             <th>Modelo</th>
