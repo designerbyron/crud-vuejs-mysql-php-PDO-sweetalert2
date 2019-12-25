@@ -70,10 +70,10 @@
 
     <script src="bootstrap/bootstrap.min.js"></script>
     <!-- Bootstrap.js 4.4.1 -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="plugins/vue.js"></script>
     <!-- Enlace CDN de vue.js -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script src="plugins/axios.min.js"></script>
     <!-- Enlace axios para peticiones ajax  -->
 
     <script src="plugins/sweetalert2/sweetalert2.all.min.js"></script>

@@ -1,17 +1,20 @@
+//Guardamos en una variable la conexion con el CRUD php
+var url = "bd/crud.php";
+
 var appMoviles = new Vue({
     el: '#appMoviles',
-    data() {
-        return {
+    data: {
+        
             moviles:[],
             marca:"",
             modelo:"",
             stock:"",
             total:0
-        }
+       
     },
     methods: {
         //Creamos nuestros botones enlazado con sweet Alert
-        btnAlta: async ()=>{
+        btnAlta: async function(){
             //usamos sweet alert
              const {value:formValues}= await Swal.fire({
                 title: 'Nuevo Movil',
@@ -27,7 +30,7 @@ var appMoviles = new Vue({
                 buttonsStyling: false,
                 confirmButtonClass: 'btn btn-primary btn-lg',
                 cancelButtonClass: 'btn btn-secondary btn-lg',
-                preConfirm: () => {
+                preConfirm: function(){
                     return[
                         this.marca = document.getElementById('marca').value,
                         this.modelo = document.getElementById('modelo').value,
@@ -36,7 +39,7 @@ var appMoviles = new Vue({
                     ]
                 }
             })
-            if (this.marca == "" || this.modelo == "" || this.stock == 0){
+            if(this.marca == "" || this.modelo == "" || this.stock == 0){
                 Swal.fire({
                     type: 'info',
                     title: 'Datos Imcompletos',
@@ -47,7 +50,7 @@ var appMoviles = new Vue({
 
                 //Aqui mostramos que fue agregado exitosamente nuestro registro
                 const Toast = Swal.mixin({
-                    toast: true,
+                    Toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
                     timer: 3000
@@ -105,12 +108,36 @@ var appMoviles = new Vue({
                     )
                 }
             })
-        }
+        },
+
+        //Procedimientos
+        //Listar los datos
+        cargarDatos(){
+            //invocamos axios para procesar la informacion
+            axios.post(url, {opcion:4}).then(response =>{
+                this.moviles = response.data;
+                //console.log(this.moviles);
+            });
+        },
+        //creamos procedimiento para crear nuevos registros (altaMovil())
+        altaMovil:function(){
+            //invocamos axios para procesar la informacion
+            axios.post(url, {opcion:1, marca:this.marca, modelo:this.modelo, stock:this.stock}).then(response =>{
+                this.cargarDatos();
+                //console.log(this.moviles);
+            });
+        },
     },
-    created() {
-        
+    created(){
+        this.cargarDatos();
     },
     computed: {
-        
+        totalStock(){
+            this.total= 0;
+            for(movil of this.moviles){
+                this.total = this.total + parseInt(movil.stock);
+            }
+            return this.total;
+        }
     },
 })
